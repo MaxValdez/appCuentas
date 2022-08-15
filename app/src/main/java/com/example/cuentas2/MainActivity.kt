@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             binding.tvMonitor.text.toString().toDouble()//el monitor esta inicializado en 0.0
         var calculo = Calculos()
         var hoy = LocalDate.now().toString()
-           // hoy = hoy.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+        // hoy = hoy.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
         /*DateTimeFormatter formatador =
         DateTimeFormatter.ofPattern("dd/MM/yyyy")
         hoy.format(formatador)*/
@@ -53,7 +53,6 @@ class MainActivity : AppCompatActivity() {
         }
         var detalles = ""
 
-
         binding.btnSumar.setOnClickListener {
 
             nuevo = binding.etNumeros.text.toString().toDouble()//Dato del EditText
@@ -65,9 +64,9 @@ class MainActivity : AppCompatActivity() {
             lifecycleScope.launch(Dispatchers.IO) {
 
                 EstadoApp.room.estadoDao()
-                    .insertarSaldo(EstadoCuentas(1, monitor, "SALDO",hoy,0))//Actualizamos saldo
+                    .insertarSaldo(EstadoCuentas(1, monitor, "SALDO", hoy, 0))//Actualizamos saldo
                 EstadoApp.room.estadoDao()
-                    .insertarSaldo(EstadoCuentas(0, nuevo, detalles,hoy,0))//Ingresamos nuevo saldo
+                    .insertarSaldo(EstadoCuentas(0,nuevo,detalles,hoy,0))//Ingresamos nuevo saldo
             }
 
         }
@@ -80,8 +79,8 @@ class MainActivity : AppCompatActivity() {
             binding.tvMonitor.text = "El Saldo actual es : $monitor"
             lifecycleScope.launch(Dispatchers.IO) {
                 detalles = binding.etDetalle.text.toString()
-                EstadoApp.room.estadoDao().insertarSaldo(EstadoCuentas(1, monitor, "SALDO",hoy,1))
-                EstadoApp.room.estadoDao().insertarSaldo(EstadoCuentas(0, nuevo, detalles,hoy,1))
+                EstadoApp.room.estadoDao().insertarSaldo(EstadoCuentas(1, monitor, "SALDO", hoy, 1))
+                EstadoApp.room.estadoDao().insertarSaldo(EstadoCuentas(0, nuevo, detalles, hoy, 1))
 
             }
         }
@@ -89,15 +88,6 @@ class MainActivity : AppCompatActivity() {
         binding.btnMontos.setOnClickListener {
             val proximaActividad = Intent(this, DetalleSaldos::class.java)
             startActivity(proximaActividad)
-            /*lifecycleScope.launch(Dispatchers.IO) {
-                //'var consultaSaldo = EstadoApp.room.estadoDao().getSaldo(binding.etNumeros.text.toString().toInt())
-                var consultaDetalle = EstadoApp.room.estadoDao()
-                    .tomarDetalle(binding.etNumeros.text.toString().toInt())
-                //Toast.makeText(this@MainActivity,"El saldo solicitado es: $consultaSaldo",Toast.LENGTH_LONG).show()
-                binding.tvMonitor.text =
-                    "El monto consultado es: ${consultaDetalle.estado} \nDetalle: ${consultaDetalle.leyenda}"
-            }*/
-
         }
     }
 }
